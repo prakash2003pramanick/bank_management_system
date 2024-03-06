@@ -1,0 +1,30 @@
+package bank_management_system;
+import java.sql.*;
+public class Conn {
+	/*
+	 * Register the driver
+	 * Create Connection 
+	 * Create Statement
+	 * Execute Query 
+	 * Close connection
+	 * 
+	 * sudo apt install mysql-server
+	 * sudo systemctl status mysql
+	 * mysql username - sudo mysql -u root -p
+	 * prakash123
+	 * 
+	 * 
+	 * create database banktry; -> this is the temporary name in the file 
+	 * show databases; - to see all the databases
+	 */
+	public Conn() {
+		Connection c;
+		try {
+			Class.forName(com.mysql.cj.jdbc.Driver);
+			String url = "jdbc:mysql:///";
+			c = DriverManager.getConnection(url);
+		}catch(Exception e) {
+			System.out.println(e);
+		}
+	}
+}

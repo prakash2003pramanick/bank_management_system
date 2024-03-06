@@ -1,0 +1,168 @@
+
+package bank_management_system;
+import javax.swing.*;
+import java.awt.*;
+import java.util.*;
+
+//Download the JCalender jar file in you system
+//https://repo1.maven.org/maven2/com/toedter/jcalendar/1.4/jcalendar-1.4.jar
+//right click on bank_management_system and go to properties -> go to java Build path -> select class path -> click on add external jar files -> select the file from the download location -> apply and close
+import com.toedter.calendar.JDateChooser;
+import java.awt.event.*;
+
+public class SignInTwo extends JFrame implements ActionListener{
+	
+	long form_number;
+	
+	JTextField f_name, AadharNumber,Pan;
+	JDateChooser dateChooser;
+	JRadioButton yes,no;
+	JButton next;
+	String formNumber;
+	JComboBox<String> acc_type_dd;
+	
+	private static final long serialVersionUID = 1L;
+	SignInTwo(String formNumber)
+	{
+		this.formNumber = formNumber;
+		setLayout(null);
+		
+		//PRINTS THE FORM NUMBER 
+		JLabel app_number= new JLabel("APPLICATION FORM NO. : "+form_number );
+		app_number.setFont(new Font("Raleway", Font.BOLD , 38));
+		app_number.setBounds(180, 20, 800, 40);
+		add(app_number);
+		
+		//PERSONAL DETAILS PAGE 2
+		JLabel personal_details= new JLabel("Personal Details : Page 2");
+		personal_details.setFont(new Font("Raleway",Font.PLAIN , 34));
+		personal_details.setBounds(40, 80 , 800, 45);
+		add(personal_details);
+		
+		//ACCOUNT TYPE
+		JLabel acc_type = new JLabel("Type           : ");
+		acc_type.setFont(new Font("Raleway", Font.PLAIN , 25));
+		acc_type.setBounds(40, 150 , 160, 40);
+		add(acc_type);
+		//Dropdown for account type
+		String acc_type_list [] = {"Select Account type","Saving","Current","Fixed Deposit"};
+		acc_type_dd = new JComboBox<String>(acc_type_list);
+		acc_type_dd.setBounds(220,155,500,30);
+		acc_type_dd.setFont(new Font("Raleway", Font.PLAIN ,15));
+		acc_type_dd.setBackground(Color.WHITE);
+		acc_type_dd.setForeground(Color.BLACK);
+		add(acc_type_dd);
+		
+		//Aadhar number from the user
+		JLabel aadharLabel= new JLabel("Aadhar       : ");
+		aadharLabel.setFont(new Font("Raleway", Font.PLAIN, 25));
+		aadharLabel.setBounds(40, 200 , 160, 40);
+		add(aadharLabel);
+		
+		AadharNumber = new JTextField("Enter valid UID");
+		AadharNumber.setFont(new Font("Raleway", Font.PLAIN ,15));
+		AadharNumber.setBounds(220,205,500,30);
+		add(AadharNumber);
+		
+		//PanNumber Details
+		JLabel PanNumber= new JLabel("PAN            :");
+		PanNumber.setFont(new Font("Arial", Font.PLAIN, 25));
+		PanNumber.setBounds(40, 250 , 160, 40);
+		add(PanNumber);
+
+		Pan = new JTextField("Enter valid PAN");
+		Pan.setFont(new Font("Raleway", Font.PLAIN ,15));
+		Pan.setBounds(220 , 255, 500, 30);
+		add(Pan);
+		
+		//Concent to store personal details/Agree with terms and consitions
+		JLabel Store_data= new JLabel("Record data :");
+		Store_data.setFont(new Font("Raleway", Font.PLAIN, 25));
+		Store_data.setBounds(40, 300 , 160, 40);
+		add(Store_data);
+		
+		yes = new JRadioButton("YES");
+		yes.setBounds(220, 305 , 160, 40);
+		yes.setFont(new Font("Raleway", Font.PLAIN, 20));
+		yes.setBackground(Color.WHITE);
+		add(yes);
+		
+		no = new JRadioButton("NO");
+		no.setBounds(400, 305 , 150	, 40);
+		no.setFont(new Font("Raleway", Font.PLAIN, 20));
+		no.setBackground(Color.WHITE);
+		add(no);
+		//this grouping avoids multiple selection of radio buttons... those in the groups only one of them can be chosen
+		ButtonGroup gendergroup = new ButtonGroup();
+		gendergroup.add(yes);
+		gendergroup.add(no);
+		
+		//creating a next button to move to the next page
+		
+		next = new JButton("Next");
+		next.setBackground(Color.BLACK);
+		next.setForeground(Color.WHITE);
+		next.setFont(new Font("Raleway", Font.PLAIN, 20));
+		next.setBounds(575, 400 , 150, 40);
+		add(next);
+		//adding a acdtion listner
+		next.addActionListener(this);
+		
+
+		//default view of the application is set to right corner for easy view during developement, later it should be aligned to center
+		getContentPane().setBackground(Color.WHITE);
+		setSize(900,800);
+		setLocation(1020,10);
+		setVisible(true);
+		
+		
+	}
+	public void actionPerformed(ActionEvent ae) {  
+		
+		//extract the values from the JTextFields
+		String formno = "" + form_number;
+		String permissionGranted = (yes.isSelected())?"yes":(no.isSelected())?"no":null;
+		String accountType = (String) (acc_type_dd.getSelectedItem());
+		String aadharnumber = AadharNumber.getText();
+		String pannumber = Pan.getText();
+		
+		
+		try {
+			if(permissionGranted.equals(null) || permissionGranted.equals("no"))
+			{
+				JOptionPane.showMessageDialog(null, "You need to grant permission to proceed");
+			}
+			else if(accountType == "Select Account type")
+			{
+				JOptionPane.showMessageDialog(null, "Select the appropriate account type");
+			}
+			// else if(false){
+			// 	//check if the aadhar number is valid
+			// }
+			// else if(false){
+			// 	//check if the pan number is valid
+			// }
+			else
+			{
+				Conn c = new Conn();
+				//Table name
+				String table_name = "add_det";
+				//create table add_det(formno varchar(7), account_type varchar(20), aadhar varchar(20), pan varchar(20), permission varchar(7));
+				String querry = "insert into "+table_name+" values ('"+formno+"','"+accountType+"','"+aadharnumber+"','"+pannumber+"','"+permissionGranted+"');";
+				if(c.s != null)
+					c.s.executeUpdate(querry);
+					System.out.println("1 row added!");
+				else {
+					System.out.println("Null");
+				}						
+			}
+		}catch (Exception ax){
+			System.err.println(ax);
+		}
+	}
+	public static void main(String args [])
+	{
+		new SignInTwo("");
+	}
+
+}

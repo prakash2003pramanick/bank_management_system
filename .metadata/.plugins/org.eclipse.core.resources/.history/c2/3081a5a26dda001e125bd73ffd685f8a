@@ -1,0 +1,39 @@
+package bank_management_system;
+import java.security.PublicKey;
+import java.sql.*;
+import com.mysql.cj.jdbc.Driver;
+public class Conn {
+
+	/*
+	 * Register the driver
+	 * Create Connection 
+	 * Create Statement
+	 * Execute Query
+	 * Close connection
+	 * 
+	 * sudo apt install mysql-server
+	 * sudo systemctl status mysql
+	 * mysql username - sudo mysql -u root -p
+	 * prakash123
+	 * 
+	 * create database banktry; -> this is the temporary name in the file 
+	 * show databases; - to see all the databases
+	 * 
+	 * 
+	 * mysql> create table user(formno varchar(7), f_name varchar(10), l_name varchar(10), dob date, gender varchar(7));
+	 */
+	    Connection c;
+	    Statement s;
+
+	    public Conn() {
+	        // MySQL is an external entity, so we need to use try-catch
+	        try {
+	            Class.forName("com.mysql.cj.jdbc.Driver");
+	            c = DriverManager.getConnection("jdbc:mysql://localhost:3306/banktry", "root", "prakash123");
+	            s = c.createStatement();
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
+}
+	
