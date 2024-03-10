@@ -18,7 +18,6 @@ public class Cashier extends JFrame implements ActionListener{
 
 	public Cashier() {
         setLayout(null);
-        //kaam suru 
 
         JLabel CashierWindow = new JLabel("Cashier Window");
         CashierWindow.setBounds(290,20,200,20);
@@ -57,13 +56,6 @@ public class Cashier extends JFrame implements ActionListener{
 
 
      
-
-        
-
-
-
-        
-        //kaam ktham
 
         getContentPane().setBackground(Color.WHITE);
         setTitle("Cashier");
