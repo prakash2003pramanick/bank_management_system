@@ -51,7 +51,7 @@ public class AccountHolder extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == depositButton) {
-            String depositAmount = JOptionPane.showInputDialog(this, "Enter deposit amount:");
+            String depositAmount = JOptionPane.showInputDialog(this, "Enter deposit amount:","Deposite Window",2);
             if (depositAmount != null && !depositAmount.isEmpty()) {
                 // Perform deposit operation (update balance in the database)
                 double deposit = Double.parseDouble(depositAmount);

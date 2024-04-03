@@ -205,15 +205,24 @@ public class SignInTwo extends JFrame implements ActionListener{
 				//create table add_det(formno varchar(7), account_type varchar(20), aadhar varchar(20), pan varchar(20), permission varchar(7));
 				String querry = "insert into "+table_name+" values ('"+formno+"','"+accountType+"','"+aadharnumber+"','"+pannumber+"','"+permissionGranted+"','"+service+"');";
 				if(c.s != null) {
-					c.s.executeUpdate(querry);
-					System.out.println("1 row added!");
+					try {
+						c.s.executeUpdate(querry);
+						System.out.println("1 row added! to add_det table");
+					}catch (Exception e) {
+						System.out.println(e);
+						JOptionPane.showMessageDialog(null, "Account Could not be created! Plase try again later");
 					}
-				else {
-					System.out.println("Null");
+					finally {
+						System.out.println("Executing insie the finally block");
+						setVisible(false);
+						new Credentials(form_number).setVisible(true);	
+					}
+					
 				}
-				System.out.println("Account created successfully");
-				// setVisible(false);
-				// new Credentials(form_number).setVisible(true);						
+				else {
+					System.out.println("Connection could not be established");
+					
+				}					
 			}
 		}catch (Exception ax){
 			System.err.println(ax);

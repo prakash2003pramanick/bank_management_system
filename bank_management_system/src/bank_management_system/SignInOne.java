@@ -21,7 +21,7 @@ public class SignInOne extends JFrame implements ActionListener{
 	private static final long serialVersionUID = 1L;
 	SignInOne()
 	{
-		setLayout(null);;
+		setLayout(null);
 		Random ran = new Random();
 		//System.out.println(Math.abs((ran.nextLong() % 9000 ) + 1000));
 		form_number = Math.abs((ran.nextLong() % 9000 ) + 1000);

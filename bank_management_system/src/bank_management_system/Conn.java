@@ -34,7 +34,7 @@ public class Conn {
 	        c = DriverManager.getConnection(url,username,password);
 	        s = c.createStatement();
 	        
-	        if (c != null) {
+	        if (c != null) {	
 	            System.out.println("Connection established!");
 	            s = c.createStatement();
 	        } else {

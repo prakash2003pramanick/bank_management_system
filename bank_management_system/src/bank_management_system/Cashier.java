@@ -156,10 +156,13 @@ public class Cashier extends JFrame implements ActionListener{
         if(e.getSource() == SearchAccount){
             String accountNumber = AccountNumber.getText();
             String debitNumber = DebitNumber.getText();
+            System.out.println(accountNumber);
+            System.out.println(debitNumber);
 
-            if(! accountNumber.isEmpty() || !debitNumber.isEmpty()){
+            if((! accountNumber.isEmpty() || !debitNumber.isEmpty() ) && (!accountNumber.equals("Enter account number") || !debitNumber.equals("Enter Debit number"))){
                 //write sql logic to retrive the account details of the user
-
+                Conn con = new Conn();
+                String query = "";
                 //if any record is found then perform these actions
                 String AccountNumberFetched = "1234234234";
                 String Name = "xyz";
@@ -168,6 +171,9 @@ public class Cashier extends JFrame implements ActionListener{
                 detailsFound(AccountNumberFetched, Name, BalanceFetched);
                 this.repaint();
                 this.revalidate();
+            }
+            else{
+                JOptionPane.showMessageDialog(rootPane, "Enter either account number or debit card number");
             }
 
         }
